@@ -79,7 +79,43 @@ class SemanticFormBuilder < ActionView::Helpers::FormBuilder
     cancel_button = @template.submit_tag(cancel_name, options.merge(:name => "cancel", :class => "cancel"))
     wrapping("submit", nil, "", submit_button+cancel_button, options)
   end
+  
+  def submit_button_tag(value = "Save", options = {})
+    
+    html_options = {}
+    if options
+      html_options = options.stringify_keys
+      html_options.delete('href')
+      html_options.delete('alt')
+      html_options.delete('confirm')
+      convert_options_to_javascript!(html_options)
+    end
+    
+    tag(:button, { :type => "submit", :class => "positive", :value => value }.update(html_options), true) +
+      image_tag("tick.png", { :alt => value })  + value +
+    "</button>"
+  end
 
+  def cancel_button_tag(value = "Cancel", options = {})
+    
+    html_options = {}
+    if options
+      html_options = options.stringify_keys
+      href = html_options['href']
+      convert_options_to_javascript!(html_options)
+    end
+    
+    tag(:a, { :class => "negative", :value => value }.update(html_options), true) +
+      image_tag("cross.png", { :alt => value })  + value +
+    "</a>"
+  end
+  
+  def submit_and_cancel_buttons(submit_name, cancel_name, options = {})
+    submit_button = submit_button_tag(submit_name, options)
+    cancel_button = cancel_button_tag(cancel_name, options)
+    wrapping("submit", nil, "", submit_button+cancel_button, options)
+  end
+  
   def radio_button_group(method, values, options = {})
     selections = []
     values.each do |value|
@@ -107,7 +143,7 @@ class SemanticFormBuilder < ActionView::Helpers::FormBuilder
       if value.is_a?(Hash)
         checked_value = value[:checked_value]
         unchecked_value = value[:unchecked_value]
-        value_text = value[:label]
+        label = value[:label]
         help = value.delete(:help)
       else
         checked_value = 1
