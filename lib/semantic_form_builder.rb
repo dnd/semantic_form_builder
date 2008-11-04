@@ -53,6 +53,11 @@ class SemanticFormBuilder < ActionView::Helpers::FormBuilder
     wrapping("time-zone-select", field_name, label, select_box, options)    
   end
   
+  def time_select(method, options = {})
+    field_name, label, options = field_settings(method, options)
+    wrapping("datetime", field_name, label, super, options)
+  end
+  
   def password_field(method, options = {})
     field_name, label, options = field_settings(method, options)
     wrapping("password", field_name, label, super, options)
