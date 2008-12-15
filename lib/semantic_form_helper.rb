@@ -31,15 +31,17 @@ module SemanticFormHelper
   def check_box_tag_group(name, values, options = {})
     selections = []
     values.each do |item|
+      checked = false
       if item.is_a?(Hash)
         value = item[:value]
-        text = item[:label]
+        text  = item[:label]
+        checked = item[:checked]
         help = item.delete(:help)
       else
         value = item
-        text = item
+        text  = item
       end
-      box = check_box_tag(name, value)
+      box = check_box_tag(name, value, checked)
       selections << boolean_field_wrapper(box, name, value, text)
     end
     label = options[:label]
