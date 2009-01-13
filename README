@@ -46,4 +46,5 @@ example:
     <%= f.text_field :name, :help => "what was Willis talkin' about?" %>
     <%= f.check_box :list, :label => "mailing list", :help => "can we send you a bunch of spam?" %>
     <%= f.submit_and_cancel("save", "cancel") %>
-<% end %>
+	<% end -%>
+<% end -%>
