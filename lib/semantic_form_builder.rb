@@ -79,7 +79,7 @@ class SemanticFormBuilder < ActionView::Helpers::FormBuilder
     values.each do |value|
       if value.is_a?(Hash)
         tag_value = value[:value]
-        label = value[:label]
+        value_text = value[:label]
         help = value.delete(:help)
       else
         tag_value = value
