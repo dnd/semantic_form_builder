@@ -6,7 +6,9 @@ module SemanticFormHelper
     to_return << %Q{<div class="#{type}-field #{options[:class]}">}
     to_return << %Q{<label for="#{field_name}">#{label}#{help}</label>} unless ["radio","check", "submit"].include?(type)
     to_return << %Q{<div class="input">}
+    to_return << options[:before] if options[:before]
     to_return << field
+    to_return << options[:after] if options[:after]
     to_return << %Q{<label for="#{field_name}">#{label}</label>} if ["radio","check"].include?(type)    
     to_return << %Q{</div></div>}
   end
