@@ -39,9 +39,12 @@ example:
   field_set_tag "Form Details" do %>
     <%= f.date_select :date, :required => true, :help => "date the something happened" %>
     <%= f.text_field :number, :required => true, :help => "the reference number for this thing" %>
+    <%= f.time_select(:open, :minute_step => 15, :required => true, :label => 'Open') %>
+    <%= f.select :topic_id, @topics, {:include_blank => "-- select --", :required => true, :label => 'Topics'} %>
     <%= f.select :external_id, [["Choose an option...",""]] + @externals.map{|c| [c.name, c.id]}, :required => true, :label => "options", :help => "select something from the list" %>
     <%= check_box_tag_group "document[other_items][]", @others.map{|u| { :value => u.id, :label => u.description }}, :label => "including these?", :help => "tick the whatever boxes are appropriate for this&nbsp;thing" %>
     <%= f.text_field :name, :help => "what was Willis talkin' about?" %>
     <%= f.check_box :list, :label => "mailing list", :help => "can we send you a bunch of spam?" %>
     <%= f.submit_and_cancel("save", "cancel") %>
-<% end %>
+	<% end -%>
+<% end -%>
