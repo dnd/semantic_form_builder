@@ -1,5 +1,6 @@
 /* Start Forms */
 form fieldset {
+  float: left;
   width: 34em;
   font-size: 16pt; }
 form fieldset legend,
@@ -11,7 +12,8 @@ form textarea {
   font-family: Georgia;
   font-size: 16pt;
   font-color: #000; }
-form input,
+form input[type=text],
+form input[type=password],
 form select,
 form textarea {
   border-top: 2px solid #999999;
@@ -23,6 +25,9 @@ form input[type=text],
 form input[type=password],
 form textarea {
   width: 20em; }
+form input[type=text][size],
+form input[type=password][size] {
+  width: auto; }
 form select {
   height: 1.5em; }
 form input[type=submit],
@@ -34,7 +39,7 @@ form input[type=button] {
   border-right: 2px solid #006000;
   border-bottom: 2px solid #006000;
   margin: 0 5px; }
-form input[type=submit][value=cancel] {
+form input[type=submit].cancel {
   border-top: 2px solid #e68582;
   border-left: 2px solid #e68582;
   border-bottom: 2px solid #801f1c;

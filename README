@@ -11,7 +11,7 @@ http://rubypond.com/articles/2008/07/16/sexy-forms-in-rails/
 
 == Installation
 
-  - script/plugin install git://github.com/rubypond/semantic-form-builder.git
+  - script/plugin install git://github.com/rubypond/semantic_form_builder.git
   - rake semantic_form_builder:setup (if the installation script didn't move
   the semantic_form.css into /public/stylesheets/)
 
