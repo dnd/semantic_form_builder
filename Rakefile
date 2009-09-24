@@ -1,15 +1,15 @@
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
+require 'spec/rake/spectask'
 
 desc 'Default: run unit tests.'
-task :default => :test
+task :default => :spec
 
-desc 'Test the semantic_form_builder plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
+desc 'Run all specs'
+Spec::Rake::SpecTask.new 'spec' do |t|
+  t.spec_files = FileList['spec']
+  t.spec_opts = ["--colour"]
 end
 
 desc 'Generate documentation for the semantic_form_builder plugin.'
