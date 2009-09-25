@@ -44,6 +44,7 @@ class SemanticFormBuilder < ActionView::Helpers::FormBuilder
 
   def select(method, choices, options = {}, html_options = {})
     field_name, label, options = field_settings(method, options)
+    (html_options[:class] ||= '') << options[:class] if options[:class] # Don't #delete :class since it is needed in #wrapping
     wrapping("select", field_name, label, super, options)
   end
 

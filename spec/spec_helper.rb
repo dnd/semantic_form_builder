@@ -11,5 +11,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string :name
     t.string :password
     t.string :body
+    t.string :file
+    t.string :option
   end
 end

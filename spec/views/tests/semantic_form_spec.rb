@@ -28,6 +28,10 @@ describe 'semantic form builder' do
     it "should not have a required marking" do
       response.should_not have_tag 'form>sup', '*'
     end
+
+    it "should not have a surrounding div with required class" do
+      response.should_not have_tag "form div.#{@field_type}-field.required"
+    end
   end
 
   shared_examples_for "a field without help" do
@@ -166,6 +170,100 @@ describe 'semantic form builder' do
 
       it "should have a correctly formatted input field" do
         response.should have_tag 'form div>div.input>textarea#semantic_user_body.required'
+      end
+    end
+  end
+
+  describe "file_field" do
+    before(:each) do
+      @field_type = 'file'
+      @field_id = 'semantic_user_file'
+    end
+
+    describe "no options" do
+      before(:each) do
+        render_form do
+          %Q{<%=f.file_field :file%>}
+        end
+      end
+
+      it_should_behave_like "a form field"
+      it_should_behave_like "a non-required field"
+      it_should_behave_like "a field without help"
+
+      it "should render an input field" do
+        response.should have_tag 'form div>div.input>input#semantic_user_file[type="file"]'
+        response.should_not have_tag "input#semantic_user_file.required"
+      end
+    end    
+
+    describe "with all options" do
+      before(:each) do
+        render_form do
+          %Q{<%=f.file_field :file, :required => true, :help => 'i need pants'%>}
+        end
+      end
+
+      it_should_behave_like "a form field"
+      it_should_behave_like "a required field"
+      it_should_behave_like "a field with help"
+
+      it "should have a correctly formatted input field" do
+        response.should have_tag 'form div>div.input>input#semantic_user_file.required[type="file"]'
+      end
+    end
+  end
+
+  describe "select" do
+    before(:each) do
+      @field_type = 'select'
+      @field_id = 'semantic_user_option'
+    end
+
+    describe "no options" do
+      before(:each) do
+        render_form do
+          %Q{<%=f.select :option, ["one", "two"]%>}
+        end
+      end
+
+      it_should_behave_like "a form field"
+      it_should_behave_like "a non-required field"
+      it_should_behave_like "a field without help"
+
+      it "should render options" do
+        response.should have_tag "form div>div.input>select#semantic_user_option" do
+          with_tag "option[value='one']", "one"
+          with_tag "option[value='two']", "two"
+        end
+      end
+
+      it "should render an input field" do
+        response.should have_tag 'form div>div.input>select#semantic_user_option'
+        response.should_not have_tag "select#semantic_user_option.required"
+      end
+    end    
+
+    describe "with all options" do
+      before(:each) do
+        render_form do
+          %Q{<%=f.select :option, ["one", "two"], {:required => true, :help => 'i need pants'}, {:class => "bob"}%>}
+        end
+      end
+
+      it_should_behave_like "a form field"
+      it_should_behave_like "a required field"
+      it_should_behave_like "a field with help"
+
+      it "should render options" do
+        response.should have_tag "form div>div.input>select#semantic_user_option" do
+          with_tag "option[value='one']", "one"
+          with_tag "option[value='two']", "two"
+        end
+      end
+
+      it "should have a correctly formatted input field" do
+        response.should have_tag 'form div>div.input>select#semantic_user_option.required'
       end
     end
   end
