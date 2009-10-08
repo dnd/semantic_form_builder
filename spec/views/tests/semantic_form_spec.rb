@@ -267,4 +267,52 @@ describe 'semantic form builder' do
       end
     end
   end
+
+  describe "check_box" do
+    before(:each) do
+      @field_type = 'check-box'
+      @field_id = 'semantic_user_agree'
+    end
+
+    describe "no options" do
+      before(:each) do
+        render_form do
+          %Q{<%=f.check_box :agree%>}
+        end
+      end
+
+      it_should_behave_like "a form field"
+      it_should_behave_like "a non-required field"
+      it_should_behave_like "a field without help"
+
+      it "should render a hidden field" do
+        response.should have_tag "input[name='semantic_user[agree]'][type='hidden'][value='0']"
+      end
+
+      it "should render an input field" do
+        response.should have_tag 'form div>div.input>input#semantic_user_agree[type="checkbox"][value="1"]'
+        response.should_not have_tag "input#semantic_user_agree.required"
+      end
+    end    
+
+    describe "with all options" do
+      before(:each) do
+        render_form do
+          %Q{<%=f.check_box :agree, {:required => true, :help => 'i need pants'}, "yes", "no"%>}
+        end
+      end
+
+      it_should_behave_like "a form field"
+      it_should_behave_like "a required field"
+      it_should_behave_like "a field with help"
+
+      it "should render the hidden field" do
+        response.should have_tag "input[name='semantic_user[agree]'][type='hidden'][value='no']"
+      end
+
+      it "should have a correctly formatted input field" do
+        response.should have_tag 'form div>div.input>input#semantic_user_agree.required[type="checkbox"][value="yes"]'
+      end
+    end
+  end
 end

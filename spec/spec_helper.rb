@@ -13,5 +13,6 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string :body
     t.string :file
     t.string :option
+    t.boolean :agree
   end
 end
